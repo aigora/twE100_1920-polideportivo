@@ -6,9 +6,9 @@ Programa que simula el sistema informatico de un polideportivo, en cuanto a la g
 
 ## Integrantes del equipo
 
-Mariano Jiménez Bohórquez -- Github: marianojb999
+Mariano Jiménez Bohórquez -> Github: marianojb999
 
-Luis Hernández Osoro -- Github: herosoluis
+Luis Hernández Osoro -> Github: herosoluis
 
 ## Objetivos del trabajo
 
