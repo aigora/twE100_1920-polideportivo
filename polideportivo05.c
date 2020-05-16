@@ -193,7 +193,7 @@ char menu(void){
 void pedirdatos(){//esta funcion crea un fichero donde pide y guadra los datos del usuario 
 	datos persona;
 	char nfichero[20];
-	int confirmacion;
+	int confirmacion=0;
 	printf("\nescribe el nombre con el que se te guardaran los datos de la forma :luis_hernandez.txt\n");
 	fflush(stdin);
 	gets(nfichero); 
@@ -202,7 +202,8 @@ void pedirdatos(){//esta funcion crea un fichero donde pide y guadra los datos d
 	if (pf==NULL){
 		printf("El fichero no se ha abierto correctamente...\n");
 	}else{
-		fflush(stdin);
+		while(confirmacion ==0){
+				fflush(stdin);
 		printf("necesitaremos algunos de sus datos:\nintroduzca su nombre\n");
 		gets(persona.nombre); 
 		fflush(stdin);
@@ -212,21 +213,23 @@ void pedirdatos(){//esta funcion crea un fichero donde pide y guadra los datos d
 		fflush(stdin);
 		printf("ahora su edad\n");
 		fflush(stdin);
-		scanf("%d",persona.edad);
+		scanf("%d",&persona.edad);
 		fflush(stdin);
-		printf( "nombre:%s \napellidos:%s \nedad:%d ", persona.nombre,persona.apellidos,persona.edad);
-		fflush(stdin);
-		scanf("%d",persona.edad);
-		fprintf(pf, "nombre:%s \napellidos:%s \nedad:%d ", persona.nombre,persona.apellidos,persona.edad);
+
 		printf("los datos han quedado guardados de la siguiente manera:\n");
-		printf( "nombre:%s \napellidos:%s \nedad:%d ", persona.nombre,persona.apellidos,persona.edad);
+		printf( "nombre:%s \napellidos:%s \nedad:%d ", persona.nombre,persona.apellidos,&persona.edad);
 		printf("\nsi no esta de acuerdo con los datos, pulse el numero 0\n");
 		fflush(stdin);
 		scanf("%d",confirmacion);
 		if(confirmacion ==0){
 			printf("no esta de acuerdo");
+		}else{
+			confirmacion=1;
 		}
 		getchar();
+			
+		}
+	
 		fclose(pf);
 	}
 
