@@ -146,7 +146,7 @@ void iniciarsesion(int *exito){
 		fclose(pf);
 		getchar();
 		printf("Hay registrados %d usuarios en nuestros ficheros...\n", usuarios);
-		
+		fflush(stdin);
 		while(limite != NUMINTENTOS){
 			printf("\nPor favor, introduzca su usuario y contrasena de menos de 20 caracteres cada uno.\n");
 			printf("\n\tUsuario: ");
@@ -191,20 +191,42 @@ char menu(void){
 	return opcion;
 }
 void pedirdatos(){//esta funcion crea un fichero donde pide y guadra los datos del usuario 
-	datos persona[NUMCLIENTES];
+	datos persona;
+	char nfichero[20];
+	int confirmacion;
+	printf("\nescribe el nombre con el que se te guardaran los datos de la forma :luis_hernandez.txt\n");
+	fflush(stdin);
+	gets(nfichero); 
 	FILE *pf;
-	pf = fopen("datos.txt","a");
+	pf = fopen(nfichero,"a");
 	if (pf==NULL){
 		printf("El fichero no se ha abierto correctamente...\n");
 	}else{
+		fflush(stdin);
 		printf("necesitaremos algunos de sus datos:\nintroduzca su nombre\n");
-		gets(datos.nombre); 
-	//	scanf("%s",datos.nombre);
+		gets(persona.nombre); 
+		fflush(stdin);
 		printf("ahora, sus dos apellidos\n");
-		gets(datos.apellidos); 
-	//	scanf("%s",datos.apellidos);
-		
-		
+		fflush(stdin);
+		gets(persona.apellidos);
+		fflush(stdin);
+		printf("ahora su edad\n");
+		fflush(stdin);
+		scanf("%d",persona.edad);
+		fflush(stdin);
+		printf( "nombre:%s \napellidos:%s \nedad:%d ", persona.nombre,persona.apellidos,persona.edad);
+		fflush(stdin);
+		scanf("%d",persona.edad);
+		fprintf(pf, "nombre:%s \napellidos:%s \nedad:%d ", persona.nombre,persona.apellidos,persona.edad);
+		printf("los datos han quedado guardados de la siguiente manera:\n");
+		printf( "nombre:%s \napellidos:%s \nedad:%d ", persona.nombre,persona.apellidos,persona.edad);
+		printf("\nsi no esta de acuerdo con los datos, pulse el numero 0\n");
+		fflush(stdin);
+		scanf("%d",confirmacion);
+		if(confirmacion ==0){
+			printf("no esta de acuerdo");
+		}
+		getchar();
 		fclose(pf);
 	}
 
