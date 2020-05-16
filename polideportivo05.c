@@ -6,33 +6,13 @@
 
 #define NUMCLIENTES 50
 #define NUMINTENTOS 4
-#define TAMVECTOR 30
 
 typedef struct{
-	char usuario[TAMVECTOR];
-	char contrasena[TAMVECTOR];
-	//poner si esta dado de alta o baja
+	char usuario[30];
+	char contrasena[30];
 } entrar;
 
 typedef struct{
-	char nombre[TAMVECTOR];
-	char apellidos[TAMVECTOR];
-	int edad;
-	char sexo[TAMVECTOR];
-	float altura;
-	sport deporte[];
-}datos;
-
-typedef struct{
-	char judo[];
-	char futbol[];
-	
-}sport;
-
-//Cargar en clientes el archivo al principio antes de empezar el porgrama
-//
-
-
 	char nombre[30];
 	char apellidos[30];
 	int edad;
@@ -41,6 +21,7 @@ typedef struct{
 void Presentacion(void);
 void FRegistro(entrar clientes[]);//Funcion para registrarte en nuestros ficheros
 void iniciarsesion(int *exito);//Funcion para iniciar sesion
+void intentos(int *limite);//Intentos para poder iniciar sesion, si se pasa del numero de intentos le saldra un mensaje diciendo que saldra del programa
 char menu(void); //Funcion para mostrar el menu
 void pedirdatos();
 
@@ -48,7 +29,6 @@ int main(){
 	
 	datos persona[NUMCLIENTES];
 	entrar clientes[NUMCLIENTES]; //Inicializo la estructura en el main
-	datos agenda[NUMCLIENTES];
 	int sesion = 0;
 	char opcion1;
 	
@@ -56,7 +36,6 @@ int main(){
 		Presentacion();
 		printf("\tPara registrarte o iniciar sesion seleccione: \n\n\t\tR -- Registrarse\n\n\t\tI -- Iniciar sesion\n");
 		scanf("%c", &opcion1);
-		//Poner fflush(stdin);
 		
 		switch(opcion1){
 			case 'R':
@@ -104,7 +83,6 @@ int main(){
 				break;
 			case 'S':
 			case 's':
-				//Abrir en modo w y actualizo el fichero para asi poder dar de baja al usuario.
 				printf("Esperemos volver a verle pronto...\n");
 				return;
 				break;
@@ -161,14 +139,14 @@ void iniciarsesion(int *exito){
 		return -1;
 	}
 	else{
-		while(fscanf(pf, "%s ; %s", clientes[i].usuario, clientes[i].contrasena) != EOF){ //Bucle para que lea el fichero que ya se habia creado en registro
+		while(fscanf(pf, "%s ; %s", clientes[0].usuario, clientes[0].contrasena) != EOF){ //Bucle para que lea el fichero que ya se habia creado en registro
 			i++;//Para que vaya leyendo uno por uno...
 			usuarios++;//Para saber cuantos usuarios hay registrados...
 		}
 		fclose(pf);
 		getchar();
 		printf("Hay registrados %d usuarios en nuestros ficheros...\n", usuarios);
-		
+		fflush(stdin);
 		while(limite != NUMINTENTOS){
 			printf("\nPor favor, introduzca su usuario y contrasena de menos de 20 caracteres cada uno.\n");
 			printf("\n\tUsuario: ");
@@ -209,25 +187,46 @@ char menu(void){
 	printf("\t\tC -- Servidores (Solo se puede acceder si eres administrador...)\n");
 	printf("\t\tS -- Salir del programa \n");
 	scanf("%c", &opcion);
-	//fflush(stdin);
 	
 	return opcion;
 }
 void pedirdatos(){//esta funcion crea un fichero donde pide y guadra los datos del usuario 
-	datos persona[NUMCLIENTES];
+	datos persona;
+	char nfichero[20];
+	int confirmacion;
+	printf("\nescribe el nombre con el que se te guardaran los datos de la forma :luis_hernandez.txt\n");
+	fflush(stdin);
+	gets(nfichero); 
 	FILE *pf;
-	pf = fopen("datos.txt","a");
+	pf = fopen(nfichero,"a");
 	if (pf==NULL){
 		printf("El fichero no se ha abierto correctamente...\n");
 	}else{
+		fflush(stdin);
 		printf("necesitaremos algunos de sus datos:\nintroduzca su nombre\n");
-		gets(datos.nombre); 
-	//	scanf("%s",datos.nombre);
+		gets(persona.nombre); 
+		fflush(stdin);
 		printf("ahora, sus dos apellidos\n");
-		gets(datos.apellidos); 
-	//	scanf("%s",datos.apellidos);
-		
-		
+		fflush(stdin);
+		gets(persona.apellidos);
+		fflush(stdin);
+		printf("ahora su edad\n");
+		fflush(stdin);
+		scanf("%d",persona.edad);
+		fflush(stdin);
+		printf( "nombre:%s \napellidos:%s \nedad:%d ", persona.nombre,persona.apellidos,persona.edad);
+		fflush(stdin);
+		scanf("%d",persona.edad);
+		fprintf(pf, "nombre:%s \napellidos:%s \nedad:%d ", persona.nombre,persona.apellidos,persona.edad);
+		printf("los datos han quedado guardados de la siguiente manera:\n");
+		printf( "nombre:%s \napellidos:%s \nedad:%d ", persona.nombre,persona.apellidos,persona.edad);
+		printf("\nsi no esta de acuerdo con los datos, pulse el numero 0\n");
+		fflush(stdin);
+		scanf("%d",confirmacion);
+		if(confirmacion ==0){
+			printf("no esta de acuerdo");
+		}
+		getchar();
 		fclose(pf);
 	}
 
