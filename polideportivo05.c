@@ -226,6 +226,7 @@ void pedirdatos(){//esta funcion crea un fichero donde pide y guadra los datos d
 		}else{
 			confirmacion=1;
 		}
+		fprintf( pf,"nombre:%s \napellidos:%s \nedad:%d ", persona.nombre,persona.apellidos,&persona.edad);
 		getchar();
 			
 		}
