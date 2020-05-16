@@ -6,22 +6,43 @@
 
 #define NUMCLIENTES 50
 #define NUMINTENTOS 4
+#define TAMVECTOR 30
 
 typedef struct{
-	char usuario[30];
-	char contrasena[30];
+	char usuario[TAMVECTOR];
+	char contrasena[TAMVECTOR];
+	//poner si esta dado de alta o baja
 } entrar;
+
+typedef struct{
+	char nombre[TAMVECTOR];
+	char apellidos[TAMVECTOR];
+	int edad;
+	char sexo[TAMVECTOR];
+	float altura;
+	sport deporte[];
+}datos;
+
+typedef struct{
+	char judo[];
+	char futbol[];
+	
+}sport;
+
+//Cargar en clientes el archivo al principio antes de empezar el porgrama
+//
+
 
 void Presentacion(void);
 void FRegistro(entrar clientes[]);//Funcion para registrarte en nuestros ficheros
 void iniciarsesion(int *exito);//Funcion para iniciar sesion
-void intentos(int *limite);//Intentos para poder iniciar sesion, si se pasa del numero de intentos le saldra un mensaje diciendo que saldra del programa
 char menu(void); //Funcion para mostrar el menu
 
 
 int main(){
 	
 	entrar clientes[NUMCLIENTES]; //Inicializo la estructura en el main
+	datos agenda[NUMCLIENTES];
 	int sesion = 0;
 	char opcion1;
 	
@@ -29,6 +50,7 @@ int main(){
 		Presentacion();
 		printf("\tPara registrarte o iniciar sesion seleccione: \n\n\t\tR -- Registrarse\n\n\t\tI -- Iniciar sesion\n");
 		scanf("%c", &opcion1);
+		//Poner fflush(stdin);
 		
 		switch(opcion1){
 			case 'R':
@@ -75,6 +97,7 @@ int main(){
 				break;
 			case 'S':
 			case 's':
+				//Abrir en modo w y actualizo el fichero para asi poder dar de baja al usuario.
 				printf("Esperemos volver a verle pronto...\n");
 				return;
 				break;
@@ -131,7 +154,7 @@ void iniciarsesion(int *exito){
 		return -1;
 	}
 	else{
-		while(fscanf(pf, "%s ; %s", clientes[0].usuario, clientes[0].contrasena) != EOF){ //Bucle para que lea el fichero que ya se habia creado en registro
+		while(fscanf(pf, "%s ; %s", clientes[i].usuario, clientes[i].contrasena) != EOF){ //Bucle para que lea el fichero que ya se habia creado en registro
 			i++;//Para que vaya leyendo uno por uno...
 			usuarios++;//Para saber cuantos usuarios hay registrados...
 		}
@@ -179,6 +202,7 @@ char menu(void){
 	printf("\t\tC -- Servidores (Solo se puede acceder si eres administrador...)\n");
 	printf("\t\tS -- Salir del programa \n");
 	scanf("%c", &opcion);
+	//fflush(stdin);
 	
 	return opcion;
 }
