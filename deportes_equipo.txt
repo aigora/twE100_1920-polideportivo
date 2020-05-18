@@ -1,0 +1,6 @@
+1	baloncesto	20.45
+2	futbol	18.75
+3	balonmano	34.56
+4	waterpolo	46.24
+5	rugby	25.60
+6	voleyball	18.30
