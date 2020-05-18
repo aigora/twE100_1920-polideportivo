@@ -12,8 +12,19 @@ Luis Hernández Osoro -> Github: herosoluis
 
 ## Objetivos del trabajo
 
-En este programa queremos simular el sistema informatico de un polideportivo. Al entrar al programa el usuario recibira un mensaje de bienvenida en el que le pediran que se registre mediante un usuario y una contraseña. Una vez registrado, deberá iniciar sesión y así acceder al primer menú en el que podrá selccionar si desea realizar una inscripción manualmente o recibir una recomendación de las actividades o deportes del polideportivo según unos datos que se le pediran anteriormente como altura, peso, edad, sexo, etc.
+Este programa trata de simular el sistema informatico de un polideportivo en el que te permita inscribirte dentro de el una vez hayas
+iniciado sesion dentro de nuestros ficheros. 
 
-Después de haber recibido la recomendación el usuario podrá seleccionar si desea esas actividades y realizar un pago con tarjeta de credito dependiendo del tiempo que desea inscribirse. O si desea realizar la inscripcion manualmente llevandole a la opcion 2 del menu. En esta segunda opcion se le abrira otro menu para que vaya seleccionando lo que desee realizar dentro del polideportivo, en esta opcion luego tambien se le realizara el cobro con tarjeta.
+Para ello, al entrar el cliente tendra que iniciar sesion en el programa siempre y cuadno este registrado. Si no esta registrado tendra
+la opcion de hacerlo.
 
-Y por último al realizar el pago se le dará de alta dentro de nuestros ficheros. Tambien habra una opción dentro del menu principal para poder ver las altas que hay dentro del polideportivo, para acceder dentro de esta opción deberas ser admninistrador del programa.
+una vez el cliente haya iniciado sesion, para ello tendra un limite de intentos, le dirigira a otro menu donde se encontrara las opciones
+de inscribirte o slair del programa.
+
+En la opcion de inscribirte se le pediran una serie de datos personales que luego se le quedaran registrados en un fichero distinto
+por cada cliente.
+En esta misma opcion una vez finalizada la toma de datos, se le preguntara si esta conforme y sino es asi podra repetirlo. Una vez 
+confirmado, se le llevara al cobro con tarjeta de credito, la cual tiene que estar validada(teniendo 12 caracteres) donde se le 
+informara de su cobro mensual. 
+
+Para terminar, despues del cobro el cliente volvera al menu dandole asi la opcion de salir del programa mencionada anteriormente.
