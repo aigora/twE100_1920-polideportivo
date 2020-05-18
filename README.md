@@ -12,19 +12,19 @@ Luis Hernández Osoro -> Github: herosoluis
 
 ## Objetivos del trabajo
 
-Este programa trata de simular el sistema informatico de un polideportivo en el que te permita inscribirte dentro de el una vez hayas
-iniciado sesion dentro de nuestros ficheros. 
+Este programa trata de simular el sistema informático de un polideportivo en el que te permita inscribirte dentro de él una vez hayas
+iniciado sesión dentro de nuestros ficheros. 
 
-Para ello, al entrar el cliente tendra que iniciar sesion en el programa siempre y cuadno este registrado. Si no esta registrado tendra
-la opcion de hacerlo.
+Para ello, al entrar el cliente tendrá que iniciar sesión en el programa siempre y cuando este registrado. Si no esta registrado tendrá
+la opción de hacerlo.
 
-Una vez el cliente haya iniciado sesion, para ello tendra un limite de intentos, le dirigira a otro menu donde se encontrara 
+Una vez el cliente haya iniciado sesión, para ello tendrá un límite de intentos, le dirigirá a otro menú donde se encontrará 
 las opciones de inscribirte o salir del programa.
 
-En la opcion de inscribirte se le pediran una serie de datos personales que luego se le quedaran registrados en un fichero distinto
+En la opción de inscribirte se le pedirán una serie de datos personales que luego se quedarán registrados en un fichero distinto
 por cada cliente.
-En esta misma opcion una vez finalizada la toma de datos, se le preguntara si esta conforme y sino es asi podra repetirlo. Una vez 
-confirmado, se le llevara al cobro con tarjeta de credito, la cual tiene que estar validada(teniendo 12 caracteres) donde se le 
-informara de su cobro mensual. 
+En esta misma opción, una vez finalizada la toma de datos, se le preguntará si esta conforme y sino es así podrá repetirlo. Una vez 
+confirmado, se le llevará al cobro con tarjeta de crédito, la cual tiene que estar validada(teniendo 12 caracteres) donde se le 
+informará de su cobro mensual. 
 
-Para terminar, despues del cobro el cliente volvera al menu dandole asi la opcion de salir del programa mencionada anteriormente.
+Para terminar, despues del cobro el cliente volvera al menu dándole así la opción de salir del programa mencionada anteriormente.
