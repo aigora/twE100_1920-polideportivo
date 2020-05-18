@@ -4,37 +4,56 @@
 #include <stdio.h>
 #include <string.h>
 
-#define NUMCLIENTES 50
-#define NUMINTENTOS 4
+#define NUMCLIENTES 50 //Tamaño para la capacidad del vector de estructuras de clientes que se registren
+#define NUMINTENTOS 4 //Intentos-1 para iniciar sesion
+#define TAM 40 //Tamaño para los vectores
+#define TAMTARJETA 13
+#define TAMDNI 10
 
 typedef struct{
-	char usuario[30];
-	char contrasena[30];
+	char usuario[TAM];
+	char contrasena[TAM];
 } entrar;
 
 typedef struct{
-	char nombre[30];
-	char apellidos[30];
+	char tipo[TAM];
+	float precio;
+	int numero;
+}sport;
+
+typedef struct{
+	char nombre[TAM];
+	char apellidos[TAM];
 	int edad;
+	float altura;
+	int vida;//Para saber si la persona que se registra ha tenido una vida sedentaria o activa
+	char sexo[TAM];
 }datos;
+
 
 void Presentacion(void);
 void FRegistro(entrar clientes[]);//Funcion para registrarte en nuestros ficheros
 void iniciarsesion(int *exito);//Funcion para iniciar sesion
-void intentos(int *limite);//Intentos para poder iniciar sesion, si se pasa del numero de intentos le saldra un mensaje diciendo que saldra del programa
 char menu(void); //Funcion para mostrar el menu
-void pedirdatos();
+void pedirdatos(void);
+void MostrarSports(char nombrefichero[], sport vector[], int *ndepor);
+void PagoTarjeta(float *pagofinal);
 
 int main(){
 	
-	datos persona[NUMCLIENTES];
+	datos persona;
+	sport deporte[TAM];
 	entrar clientes[NUMCLIENTES]; //Inicializo la estructura en el main
-	int sesion = 0;
+	sport carrito[TAM];
+	
+	int sesion = 0, confirmacion = 1;
 	char opcion1;
+
 	
 	while(sesion == 0){ //Meto un bucle infinito hasta que haya iniciado sesion dandole el valor de sesion != 0 y asi se ira a otro bucle que sera el menu
 		Presentacion();
-		printf("\tPara registrarte o iniciar sesion seleccione: \n\n\t\tR -- Registrarse\n\n\t\tI -- Iniciar sesion\n");
+		system("cls");
+		printf("\n\n\tPara registrarte o iniciar sesion seleccione: \n\n\t\tR -- Registrarse\n\n\t\tI -- Iniciar sesion\n");
 		scanf("%c", &opcion1);
 		
 		switch(opcion1){
@@ -61,25 +80,12 @@ int main(){
 		switch(menu()){
 			case 'A':
 			case 'a':
-				//Primer caso: Deporte y ejercicios recomendados
-				/*el programa te pedira una serie de datos y despues te dira que deporte seria el ideal para ti. A continuación, te preguntaran
-				 el tiempo que estarás inscrito y te realizaran el cobro con tarjeta de crédito, si no te gusta la recomendación o es muy caro
-				  puedes salir y volver a hacer la inscripción tu mismo. En caso contrario tendrás la opción de salir del programa.*/
-				break;
-			case 'B':
-			case 'b':
 				pedirdatos();
-				//Segundo caso: Inscripción
+				// Inscripción:
 				/* el programa te da la opción de hacer tu propia inscripción seleccionando los deportes y ejercicios que quiera
 				 el usuario realizar en el  polideportivo. Después de seleccionar todo, te piden el tiempo que deseas estar y te realizan
 				  el cobro con una tarjeta de crédito, sino se introducen los 12 dígitos de la tarjeta, no será válida y tendrás que repetir el pago.
 				   Una vez finalizado te daran la opcion de salir del programa. */
-				break;
-			case 'C':
-			case 'c':
-				//Tercer caso: Servidores 
-				/*el programa te dejará acceder siempre y cuando seas administrador. En esta opción podrás observar cuantas personas
-				 se han dado de alta en nuestros servidores y dar de baja a alguna pudiendo editar el fichero desde el programa.*/
 				break;
 			case 'S':
 			case 's':
@@ -98,7 +104,13 @@ int main(){
 }
 
 void Presentacion(void){
-	printf("ESTA ES LA PRESENTACION, EN EL FUTURO SERA MAS BONITA \nMARIANO Y LUIS\n\n");
+	printf("\n\n\n\t\t\t\t***BIENVENIDO AL MEJOR POLIDEPORTIVO DE LA HISTORIA***\n\n\n");
+	printf("\tEn este programa se podra dar de alta en nuestro polideportivo, apuntandose a cualquier tipo de deporte\n" 
+	"\tindividual, o de equipo, aunque si lo prefiere, se puede apuntar a nuestro prestigioso gimnasio \n\tuna vez se haya registrado e iniciado sesion...\n\n");
+	printf("\n\n\t\t\t\t\tESPERAMOS QUE SEA DE SU AGRADO :)\n\n");
+	printf("\n\n\n\n\nPrograma realizado por: MARIANO JIMENEZ BOHORQUEZ Y LUIS HERNANDEZ OSORO\n\n");
+	getchar();
+	
 }
 void FRegistro(entrar clientes[]){//Meto el vector de estructuras en la funcion
 
@@ -129,13 +141,14 @@ void iniciarsesion(int *exito){
 	entrar clientes[NUMCLIENTES]; //Inicializo el vector de estructuras en la funcion
 	
 	int i = 0, usuarios = 0, limite = 0;
-	char usuario[20], contrasena[20];
+	char usuario[TAM], contrasena[TAM];
 	
 	FILE*pf;
 	pf = fopen("usuarios.txt", "r"); //Modo lectura 
 	
 	if(pf == NULL){
 		printf("Lo siento pero no hay usuarios registrados...\nDebera volver al inicio y registrarse...\n\n");
+		getchar();
 		return -1;
 	}
 	else{
@@ -182,60 +195,195 @@ char menu(void){
 	char opcion;
 	
 	printf("\tBienvenido, seleccione uno de nuestros servicios disponibles: \n");
-	printf("\n\t\tA -- Deporte y ejercicios recomendados\n");
-	printf("\t\tB -- Inscripción\n");
-	printf("\t\tC -- Servidores (Solo se puede acceder si eres administrador...)\n");
+	printf("\n\t\tA -- Inscripción\n");
 	printf("\t\tS -- Salir del programa \n");
 	scanf("%c", &opcion);
 	
 	return opcion;
 }
-void pedirdatos(){//esta funcion crea un fichero donde pide y guadra los datos del usuario 
+void pedirdatos(void){//esta funcion crea un fichero donde pide y guadra los datos del usuario 
+
 	datos persona;
-	char nfichero[20];
-	int confirmacion=0;
-	printf("\nescribe el nombre con el que se te guardaran los datos de la forma :luis_hernandez.txt\n");
+	sport carrito[TAM];
+	sport deporte[TAM];
+	
+	char nfichero[TAM];
+	int confirmacion, opcion2;
+	int nelemento, ndepor, opcion;
+	int i;
+	float pagofinal;
+	
 	fflush(stdin);
+	printf("\nEscribe el nombre del fichero con el que se te guardaran los datos de la siguiente forma : luis_hernandez.txt\n");
 	gets(nfichero); 
+	
 	FILE *pf;
-	pf = fopen(nfichero,"a");
+	pf = fopen(nfichero,"w");
 	if (pf==NULL){
 		printf("El fichero no se ha abierto correctamente...\n");
-	}else{
-		while(confirmacion ==0){
-				fflush(stdin);
-		printf("necesitaremos algunos de sus datos:\nintroduzca su nombre\n");
-		gets(persona.nombre); 
-		fflush(stdin);
-		printf("ahora, sus dos apellidos\n");
-		fflush(stdin);
-		gets(persona.apellidos);
-		fflush(stdin);
-		printf("ahora su edad\n");
-		fflush(stdin);
-		scanf("%d",&persona.edad);
-		fflush(stdin);
-
-		printf("los datos han quedado guardados de la siguiente manera:\n");
-		printf( "nombre:%s \napellidos:%s \nedad:%d ", persona.nombre,persona.apellidos,&persona.edad);
-		printf("\nsi no esta de acuerdo con los datos, pulse el numero 0\n");
-		fflush(stdin);
-		scanf("%d",confirmacion);
-		if(confirmacion ==0){
-			printf("no esta de acuerdo");
-		}else{
-			confirmacion=1;
-		}
-		fprintf( pf,"nombre:%s \napellidos:%s \nedad:%d ", persona.nombre,persona.apellidos,&persona.edad);
+		return -1;
+	}
+	else{
+		
+		do{
+			printf("\nNecesitaremos algunos de sus datos...(Presione si es necesario una tecla para continuar)");
+			getchar();
+			printf("\n\nIntroduzca su nombre: ");
+			gets(persona.nombre); 
+			fflush(stdin);
+			printf("\nAhora, sus dos apellidos: ");
+			gets(persona.apellidos);
+			fflush(stdin);
+			printf("\nAhora su edad: ");
+			scanf("%d",&persona.edad);
+			fflush(stdin);
+			printf("\nIntroduzca su altura en metros: ");
+			scanf("%f", &persona.altura);
+			fflush(stdin);
+			printf("\nIntroduzca su estilo de vida, si ha tenido una vida sedentaria pulse (1) en caso contrario (2): ");
+			scanf("%d", &persona.vida);
+			fflush(stdin);
+			printf("\nIntroduzca su sexo: ");
+			gets(persona.sexo);
+			fflush(stdin);
+			printf("\nY por último introduzca que deporte desea practicar: ");
+			printf("\n\t\t\t1 -- Deportes de individuales(gimnasio incluido)\n\t\t\t2 -- Deportes de equipo\n");
+			scanf("%d", &opcion2);
+			fflush(stdin);
+			//Enseñar deportes con MostrarSports
+			switch(opcion2){
+				case 1:
+					
+					while(1){
+						system("cls");
+						MostrarSports("deportes_individuales.txt", carrito, &ndepor);
+						printf("\n\nIntroduzca el numero del deporte que desea: ");
+						scanf("%d", &nelemento);
+						fflush(stdin);
+						if (nelemento > ndepor || nelemento < 1) {
+							printf("Opcion no valida.\n");
+							getchar();
+						}
+						else {
+							fflush(stdin);
+							deporte[0].numero = nelemento;
+							strcpy(deporte[0].tipo, carrito[nelemento-1].tipo);
+							deporte[0].precio = carrito[nelemento-1].precio;
+							
+							printf("\nHa seleccionado: ");
+							printf("%d -- %s = %.2f\n\n", deporte[0].numero, deporte[0].tipo, deporte[0].precio);
+						}
+						break;
+					}
+					break;
+				case 2:
+					while(1){
+						system("cls");
+						MostrarSports("deportes_equipo.txt", carrito, &ndepor);
+						printf("\n\nIntroduzca el numero del deporte que desea: ");
+						scanf("%d", &nelemento);
+						
+						if (nelemento > ndepor || nelemento < 1) {
+							printf("Opcion no valida.\n");
+							system("pause");
+						}
+						else {
+							deporte[0].numero = nelemento;
+							strcpy(deporte[0].tipo, carrito[nelemento - 1].tipo);
+							deporte[0].precio = carrito[nelemento - 1].precio;
+							
+							printf("\nHa seleccionado: ");
+							printf("%d -- %s = %.2f\n\n", deporte[0].numero, deporte[0].tipo, deporte[0].precio);
+						}
+						break;
+					}
+					break;
+				default:
+					printf("Opcion no valida...\n");
+					break;
+			}
+			
+			
+			fprintf(pf, "Nombre: %s \nApellidos: %s \nEdad: %d \nAltura: %.2f \nVida(1,sedentaria; 2,activa): %d \nSexo: %s \nDeporte: %d -- %s = %.2f ", 
+			persona.nombre, persona.apellidos, persona.edad, persona.altura, persona.vida, persona.sexo, deporte[0].numero, 
+			deporte[0].tipo, deporte[0].precio);
+			fclose(pf);
+			
+			getchar();	
+			system("cls");
+			printf("\n\nLos datos han quedado guardados de la siguiente manera:\n");
+			printf( "\n\n\tNombre:%s\n\tApellidos:%s\n\tEdad:%d\n\tAltura: %.2f\n\tVida(1,sedentaria; 2,activa): %d\n\tSexo: %s\n\tDeporte: %d -- %s = %.2f\n", 
+			persona.nombre,persona.apellidos,persona.edad, persona.altura, persona.vida, persona.sexo, deporte[0].numero, 
+			deporte[0].tipo, deporte[0].precio);
+			
+			printf("\nSi esta de acuerdo con los datos, pulse el numero 0, en caso contrario pulsa cualquier otro numero: ");
+			scanf("%d", &confirmacion);
+			
+		}while(confirmacion != 0 );
 		getchar();
+		
+		pagofinal = deporte[0].precio;
+		printf("\n\n****AHORA SE LE REALIZARA EL COBRO CON TARJETA****\n\n");
+		PagoTarjeta(&pagofinal);
+	}
+}
+void MostrarSports(char nombrefichero[], sport vector[], int *ndatos){
+	
+	int i = 0;
+	
+	FILE*pf;
+	
+	pf=fopen(nombrefichero, "r");
+	
+	if (pf==NULL){
+		printf("El fichero no se ha abierto correctamente...\n");
+		return -1;
+	}
+	else{
+		printf("\t\t\t**ESTOS SON LOS DEPORTES DISPONIBLES JUNTO A SUS RESPECTIVOS PRECIOS**\n\n");
+		while(fscanf(pf, "%d%s%f", &vector[i].numero, vector[i].tipo, &vector[i].precio)!=EOF){
+			printf("\t%d -- %s = %.2f \n", vector[i].numero, vector[i].tipo, vector[i].precio);
+			i++;
+		}
+		fclose(pf);
+		*ndatos = i;
+	}
+	
+}
+void PagoTarjeta(float *pagofinal){
+	
+	datos persona;
+	sport deporte[TAM];
+	sport carrito[TAM];
+	
+	int ncarrito;
+	
+//	sport individuales[TAM];
+//	sport colectivo[TAM];
+	
+	int tarjeta[TAMTARJETA];
+	char opcion;
+	int  longitud, confirmacion;
+	do{
+		//CargarFichero("deportes_individuales.txt", individuales);
+		//CargarFichero("deportes_equipo.txt", colectivo);
+		
+		printf("\n\t Por favor, introduzca el numero de su tarjeta de credito: \n");
+		scanf("%s", tarjeta, TAMTARJETA);
+		fflush(stdin);
+		longitud = strlen(tarjeta);//medimos la longitud para que cumpla que es una tarjeta de credito con 12 numeros
+		printf("Esta tarjeta tiene %d caracteres\n", longitud);
+		if(longitud == 12){
+			printf("\nEl numero de su tarjeta es: %s \n", tarjeta, TAMTARJETA);
+			printf("Se le realizara el cobro de %.2f al mes...\n", *pagofinal);
+			getchar();
+			return;
 			
 		}
-	
-		fclose(pf);
-	}
-
-
+		else{
+			printf("Lo siento, pero no se ha podido reconocer la tarjeta. Intentelo de nuevo...\n");
+			getchar();
+		}
+	}while(confirmacion != 1);
 }
 
-	
-	
