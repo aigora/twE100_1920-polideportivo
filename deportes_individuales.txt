@@ -1,0 +1,6 @@
+1	gimnasio	30.56
+2	golf	45.78
+3	hipica	25.98
+4	tenis	34.56
+5	judo	31.76
+6	boxeo	18.99
