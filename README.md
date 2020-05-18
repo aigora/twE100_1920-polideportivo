@@ -27,4 +27,4 @@ En esta misma opción, una vez finalizada la toma de datos, se le preguntará si
 confirmado, se le llevará al cobro con tarjeta de crédito, la cual tiene que estar validada(teniendo 12 caracteres) donde se le 
 informará de su cobro mensual. 
 
-Para terminar, despues del cobro el cliente volvera al menu dándole así la opción de salir del programa mencionada anteriormente.
+Para terminar, después del cobro el cliente volverá al menú anterior dándole así la opción de salir del programa.
