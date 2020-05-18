@@ -18,8 +18,8 @@ iniciado sesion dentro de nuestros ficheros.
 Para ello, al entrar el cliente tendra que iniciar sesion en el programa siempre y cuadno este registrado. Si no esta registrado tendra
 la opcion de hacerlo.
 
-una vez el cliente haya iniciado sesion, para ello tendra un limite de intentos, le dirigira a otro menu donde se encontrara las opciones
-de inscribirte o slair del programa.
+Una vez el cliente haya iniciado sesion, para ello tendra un limite de intentos, le dirigira a otro menu donde se encontrara 
+las opciones de inscribirte o salir del programa.
 
 En la opcion de inscribirte se le pediran una serie de datos personales que luego se le quedaran registrados en un fichero distinto
 por cada cliente.
